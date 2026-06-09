@@ -2,23 +2,28 @@ import { useState } from "react";
 
 
 function App(){
-
-  const getStudentData = async () => {
-    const response = await fetch('http://localhost:8080/students');
+  const [ student , setStudent] = useState(null);
+  const getStudent = async () => {
+    const response = await fetch("https://localhost:8080/students");
     const data = await response.json();
     setStudent(data);
-  }
-  return (
-    <div>
-      <h1>Welcome to my page</h1>
-      <button onClick = {getStudentData}>
-        Get student data
+  };
+  return(
+    <div style = {{ padding: "40px"}}>
+      <button onClick = {getStudent}>
+        Get Student
       </button>
-      <h1> This is the student data :</h1>
-      <h2> {getStudentData.name}</h2>
-      <h3> {getStudentData.course}</h3>
-      <h4> {getStudentData.id}</h4>
-
+      {
+        student &&(
+          <div>
+            <h3>
+              ID : {student.id}
+            </h3>
+            <h2>Name : {student.name}</h2>
+            <h3>Age : {student.age}</h3>
+          </div>
+        )
+      }
     </div>
   );
 }
