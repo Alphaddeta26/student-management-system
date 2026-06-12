@@ -1,9 +1,9 @@
 package com.example.lms.controller;
 
+import com.example.lms.controller.Service.Database.StudentService;
 import com.example.lms.model.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,17 +17,17 @@ import java.util.stream.Collectors;
 @CrossOrigin("*")
 public class StudentController{
      @Autowired
-        JdbcTemplate jdbcTemplate;
+        private StudentService service;
         @GetMapping("/count")
-        public int countStudent(){
-            String sql = "SELECT COUNT(*) from students";
-
-            return jdbcTemplate.queryForObject(
-                sql,
-                Integer.class
-            );
+        public Integer countStudents(){
+            return service.getStudentCount();
         }
-    @GetMapping
+        @GetMapping("/message")
+        public String getMessage(){
+            return service.getMessage();
+
+            }
+            @GetMapping
     public ArrayList<Student> getStudents(){
         ArrayList<Student> students = new ArrayList<>();
         students.add(new Student(1, "Shiv", "CSE"));
