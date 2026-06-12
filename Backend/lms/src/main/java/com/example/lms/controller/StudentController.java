@@ -17,7 +17,11 @@ import java.util.stream.Collectors;
 @CrossOrigin("*")
 public class StudentController{
      @Autowired
-        private StudentService service;
+        private final StudentService service;
+        public StudentController(StudentService service){
+            this.service = service;
+        }
+
         @GetMapping("/count")
         public Integer countStudents(){
             return service.getStudentCount();
@@ -47,4 +51,9 @@ public class StudentController{
     public List<String> getNames(){
         return getStudents().stream().map(Student :: getName).collect(Collectors.toList());
     }
+
+    @PostMapping
+    public Student addStudent(@RequestBody Student student){
+        return service.saveStudent(student);
     }
+}
