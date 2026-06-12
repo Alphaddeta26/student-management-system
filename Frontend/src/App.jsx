@@ -9,19 +9,14 @@ function App(){
 
   };
   useEffect(() => {
-    getStudents();
+
+    fetch("https://localhost:8080/students/count")
+    .then(res => res.json())
+    .then(data => setCount(data));
   }, []);
   return(
-    <div style = {{ padding: "40px" }}>
-      <h1> BCA Students </h1>
-      {
-        students.map(student => (
-          <div key = {student.id}>
-            <h3>{student.name}</h3>
-            </div>
-          
-        ))
-      }
+    <div>
+      <h1> Total Students: {count}</h1>
       </div>
   );
 }

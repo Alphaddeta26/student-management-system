@@ -1,6 +1,9 @@
 package com.example.lms.controller;
 
 import com.example.lms.model.Student;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -13,6 +16,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/students")
 @CrossOrigin("*")
 public class StudentController{
+     @Autowired
+        JdbcTemplate jdbcTemplate;
+        @GetMapping("/count")
+        public int countStudent(){
+            String sql = "SELECT COUNT(*) from students";
+
+            return jdbcTemplate.queryForObject(
+                sql,
+                Integer.class
+            );
+        }
     @GetMapping
     public ArrayList<Student> getStudents(){
         ArrayList<Student> students = new ArrayList<>();
@@ -33,4 +47,4 @@ public class StudentController{
     public List<String> getNames(){
         return getStudents().stream().map(Student :: getName).collect(Collectors.toList());
     }
-}
+    }
