@@ -1,28 +1,29 @@
-import { useState } from "react";
-
+import { useEffect, useState} from "react";
 
 function App(){
-  const [ student , setStudent] = useState(null);
-  const getStudent = async () => {
-    const response = await fetch("https://localhost:8080/students");
+  const [students, setStudents] = useState([]);
+  const getStudents = async () => {
+    const response = await fetch("https://localhost:8080/students/bca");
     const data = await response.json();
-    setStudent(data);
+    setStudents(data);
+
   };
   useEffect(() => {
-    getStudent();
+    getStudents();
   }, []);
   return(
-    <div>
-      <h1>Student List </h1>
+    <div style = {{ padding: "40px" }}>
+      <h1> BCA Students </h1>
       {
-        students.map((student) => (
+        students.map(student => (
           <div key = {student.id}>
-            <h2>{student.name}</h2>
-            <h3>{student.course}</h3>
-          </div>
+            <h3>{student.name}</h3>
+            </div>
+          
         ))
       }
-    </div>
+      </div>
   );
 }
+
 export default App;
