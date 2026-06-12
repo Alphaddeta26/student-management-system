@@ -8,21 +8,19 @@ function App(){
     const data = await response.json();
     setStudent(data);
   };
+  useEffect(() => {
+    getStudent();
+  }, []);
   return(
-    <div style = {{ padding: "40px"}}>
-      <button onClick = {getStudent}>
-        Get Student
-      </button>
+    <div>
+      <h1>Student List </h1>
       {
-        student &&(
-          <div>
-            <h3>
-              ID : {student.id}
-            </h3>
-            <h2>Name : {student.name}</h2>
-            <h3>Age : {student.age}</h3>
+        students.map((student) => (
+          <div key = {student.id}>
+            <h2>{student.name}</h2>
+            <h3>{student.course}</h3>
           </div>
-        )
+        ))
       }
     </div>
   );
