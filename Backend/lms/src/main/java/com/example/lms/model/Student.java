@@ -9,6 +9,9 @@ public class Student{
     private Integer id;
     private String name;
     private String course;
+    public Student(){
+        
+    }
 
     public  Student(Integer id, String name, String course){
         this.id = id;

@@ -1,22 +1,23 @@
 package com.example.lms.controller;
 
 import com.example.lms.controller.Service.Database.StudentService;
+import com.example.lms.dto.StudentResponseDTO;
 import com.example.lms.model.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.example.lms.dto.StudentRequestDTO;
 
 @RestController
 @RequestMapping("/students")
 @CrossOrigin("*")
 public class StudentController{
-     @Autowired
+     
         private final StudentService service;
         public StudentController(StudentService service){
             this.service = service;
@@ -55,5 +56,29 @@ public class StudentController{
     @PostMapping
     public Student addStudent(@RequestBody Student student){
         return service.saveStudent(student);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getStudent(@PathVariable Integer id){
+        Student student = service.getStudentById(id);
+        StudentResponseDTO response =new StudentResponseDTO(student.getId(),
+        student.getName(),
+        student.getCourse()
+        
+    );
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> addStudent(@RequestBody StudentRequestDTO dto){
+        Student student = service.addStudent(dto);
+        return ResponseEntity.ok(student);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable Integer id, @RequestBody StudentRequestDTO dto){
+        return ResponseEntity.ok(service.updateStudent(id, dto)
+        );
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable Integer id){
+        return ResponseEntity.ok(service.deleteStudent(id));
     }
 }

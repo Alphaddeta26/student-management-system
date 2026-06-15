@@ -18,7 +18,7 @@ function App(){
     fetch("https://localhost:8080/students/count")
     .then(res => res.json())
     .then(data => setCount(data));
-  }
+  });
   const addStudent =async () => {
     await fetch("https://localhost:8080/students/add", {
       method: "POST",
